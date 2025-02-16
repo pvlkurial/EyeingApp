@@ -1,0 +1,27 @@
+stages:
+  - build
+  - test
+
+image: gradle:alpine
+
+build:
+  stage: build
+  only:
+    - main
+  script:
+    - echo "Building Java application with Gradle..."
+    - chmod a+x gradlew
+    - ./gradlew build -x test
+  artifacts:
+    paths:
+      - build/libs
+
+test:
+  stage: test
+  only:
+    - main
+  script:
+    - echo "Running tests..."
+    - chmod a+x gradlew
+    - ./gradlew check
+
